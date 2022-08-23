@@ -1,0 +1,906 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<style type="text/css">
+  .md-content figure{
+    padding-top: 30px;
+  }
+  .md-content figcaption{
+    margin-bottom: 0px!important;
+  }
+  h3 {
+    /*color: var(--md-accent-fg-color);*/
+    color: var(--md-typeset-a-color);
+  }
+  .common-box {
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: double;
+    padding: 5px 20px !important;
+    /*border-color: red;*/
+    /*background-color: rgb(255,230,230);*/
+  }
+
+  .common-box a{
+    font-weight: 600;
+  }
+
+  @media screen and (max-width:750px){ 
+    video{
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>
+<script type="text/javascript">
+  // START
+  // 批量设置动图宽度
+  function setGifWidth() {
+    var content = document.querySelector('.md-content');
+    if (content != null){
+      var imgs = content.getElementsByTagName('img');
+      for (var i = 0; i < imgs.length; ++i){
+        if (imgs[i].getAttribute('src').endsWith(".gif")){
+          if (!imgs[i].hasAttribute('width')){
+            imgs[i].setAttribute('width', '400');
+          }
+          imgs[i].setAttribute('loading', 'lazy');
+        }
+      }
+    }
+  }
+  // 批量修改小图标大小
+  function setTitleIconWidth() {
+    var imgs = document.querySelectorAll('h3>img');
+    for (var i = 0; i < imgs.length; ++i){
+      if (!imgs[i].hasAttribute('width')){
+        imgs[i].setAttribute('width', '35');
+        imgs[i].setAttribute('style', 'margin-right:8px;vertical-align:middle;');
+      }
+    }
+  }
+  // 添加视频
+  function setVideos() {
+    var videos = document.querySelectorAll('video');
+    for (var i = 0; i < videos.length; ++i){
+      var v = videos[i];
+      if (!v.hasAttribute('autoplay')){
+        v.setAttribute('autoplay', 'autoplay');
+      }
+      if (!v.hasAttribute('playsinline')){
+        v.setAttribute('playsinline', 'playsinline');
+      }
+      if (!v.hasAttribute('webkit-playsinline')){
+        v.setAttribute('webkit-playsinline', 'webkit-playsinline');
+      }
+      if (!v.hasAttribute('muted')){
+        v.setAttribute('muted', 'muted');
+      }
+      if (!v.hasAttribute('loop')){
+        v.setAttribute('loop', 'loop');
+      }
+      if (!v.hasAttribute('width')){
+        v.setAttribute('width', '400');
+      }
+      // var name = v.getAttribute('lw-name');
+      // var source = document.createElement('source');
+      // source.setAttribute('src', 'http://mod.3vcm.vip/videos/'+name);
+      // source.setAttribute('type', 'video/mp4');
+      // v.appendChild(source);
+
+      var txt =document.createTextNode("'您的浏览器不支持 video 标签，建议使用 Chrome、Safari、Edge 等现代浏览器。'");
+      v.appendChild(txt);
+    }
+  }
+  // 添加新js脚本调整颜色
+  function getPalette() {
+    var path = location.pathname;
+    var theme = {
+      "homura": {
+        "default": "deep-purple",
+      },
+      "momo": {
+        "default": "pink",
+      },
+      "ohtoai": {
+        "default": "amber",
+      },
+      "bugtracker": {
+        "default": "black",
+      },
+      "luckwater": {
+        "default": "light-blue"
+      },
+      "home": {
+        "default": "green",
+      },
+      "default": {
+        "default": "black"
+      },
+    }
+    for (var key in theme){
+      if (path.indexOf(key) != -1){
+        return theme[key];
+      }
+    }
+    return theme.default;
+  }
+  function dictGetValue(obj, key){
+    if (typeof obj == "string"){
+      return obj;
+    }
+    else if (obj[key]){
+      return obj[key];
+    }
+    else{
+      return obj["default"];
+    }
+  }
+
+  function changePalette() {
+    var color = getPalette()
+    console.log("Color:", color);
+    // html body
+    body = document.body;
+    // 深浅色切换器
+    var form = document.querySelector('header>nav>.md-header__option');
+    if (form != null){
+      var i = 0;
+      var label = form.getElementsByClassName('md-icon');
+      var option = form.getElementsByClassName('md-option');
+
+      for (i = 0; i < option.length; ++i){
+        var scheme = option[i].getAttribute('data-md-color-scheme');
+        var data = dictGetValue(color, scheme);
+        var primary = dictGetValue(data, "primary");
+        var accent  = dictGetValue(data, "accent");
+        option[i].setAttribute('data-md-color-primary', primary);
+        option[i].setAttribute('data-md-color-accent', accent);
+        if (!label[i].hasAttribute('hidden')){
+          // 顺便设置一下主题颜色
+          body.setAttribute('data-md-color-primary', primary);
+          body.setAttribute('data-md-color-accent', accent);
+        }
+      }
+    } 
+    else{
+    }
+  }
+
+  function setHighlight(){
+    console.log("setHighlight")
+    var reg = new RegExp("h=([^&]*)(&|$)", "i");
+    let r = window.location.search.substr(1).match(reg)[1];
+    if (r != null) {
+      r = decodeURIComponent(r);
+      var content = document.getElementById("md-content").innerHTML;
+      console.log(r)
+      var reg = new RegExp("(" + r + ")", "g");  
+      var str = content;  
+      var newstr = str.replace(reg, "<span style='background-color:#EBEC4F'>$1</span>");
+      document.getElementById("md-content").innerHTML = newstr;
+    }
+  }
+
+  function modPageInit() {
+    changePalette();
+    setGifWidth();
+    setTitleIconWidth();
+    setVideos();
+    setHighlight();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', modPageInit);
+  } else {
+    modPageInit();
+  }
+// END
+</script>
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="老王">
+      
+      
+        <link rel="canonical" href="https://dont-starve-mod.github.io/en/en/content/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.1.8">
+    
+    
+      
+        <title>Content - Don't Starve Mods by LAOWANG</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.644de097.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7C&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:""}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#character" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="/en/home" title="Don&#39;t Starve Mods by LAOWANG" class="md-header__button md-logo" aria-label="Don't Starve Mods by LAOWANG" data-md-component="logo">
+      
+  <img src="https://pic.imgdb.cn/item/6194b9462ab3f51d9154d00b.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Don't Starve Mods by LAOWANG
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Content
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../home/" class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../momo_index/" class="md-tabs__link">
+        Momo Chiyoda
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../noellipsis_index/" class="md-tabs__link">
+        No Ellipse
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ohtoai_character/" class="md-tabs__link">
+        Ai Ohto
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../luckwater_index/" class="md-tabs__link">
+        Luck Water
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="/en/home" title="Don&#39;t Starve Mods by LAOWANG" class="md-nav__button md-logo" aria-label="Don't Starve Mods by LAOWANG" data-md-component="logo">
+      
+  <img src="https://pic.imgdb.cn/item/6194b9462ab3f51d9154d00b.png" alt="logo">
+
+    </a>
+    Don't Starve Mods by LAOWANG
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../home/" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Momo Chiyoda
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Momo Chiyoda" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Momo Chiyoda
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../momo_index/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../momo_secret/" class="md-nav__link">
+        Secret Documant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../momo_test/" class="md-nav__link">
+        Debug Commands
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          No Ellipse
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="No Ellipse" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          No Ellipse
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../noellipsis_index/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Ai Ohto
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ai Ohto" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Ai Ohto
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ohtoai_character/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Luck Water
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Luck Water" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Luck Water
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../luckwater_index/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#character" class="md-nav__link">
+    Character
+  </a>
+  
+    <nav class="md-nav" aria-label="Character">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#base-status" class="md-nav__link">
+    Base status
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dream-enhancement" class="md-nav__link">
+    Dream enhancement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negative-effects" class="md-nav__link">
+    Negative effects
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weapons" class="md-nav__link">
+    weapons
+  </a>
+  
+    <nav class="md-nav" aria-label="weapons">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-color-ballpoint-pen" class="md-nav__link">
+    4 color ballpoint pen
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#penlight" class="md-nav__link">
+    Penlight
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#golden-ribbon-under-development" class="md-nav__link">
+    Golden Ribbon -- under development
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pet" class="md-nav__link">
+    Pet
+  </a>
+  
+    <nav class="md-nav" aria-label="Pet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leon-under-development" class="md-nav__link">
+    Leon -- under development
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content" id="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>Content</h1>
+
+<p>Mod is under development.</p>
+<p>Ai Ohto is the main character in the anime <em>Wonder Egg Priority</em>.</p>
+<figure>
+  <img src="https://img.imgdb.cn/item/60688e8e8322e6675c810e6e.png" width="500" />
+  <figcaption>She is so cute!</figcaption>
+</figure>
+
+<h2 id="character">Character<a class="headerlink" href="#character" title="Permanent link">&para;</a></h2>
+<h3 id="base-status">Base status<a class="headerlink" href="#base-status" title="Permanent link">&para;</a></h3>
+<p>Hunger 200 / health 150 / sanity 200 / attack 1x</p>
+<h3 id="dream-enhancement">Dream enhancement<a class="headerlink" href="#dream-enhancement" title="Permanent link">&para;</a></h3>
+<p>Ai can regain more health and sanity in sleep, but the speed of food will consumption be faster.</p>
+<h3 id="negative-effects">Negative effects<a class="headerlink" href="#negative-effects" title="Permanent link">&para;</a></h3>
+<p>I haven't decided yet. <del> How could such a lovely girl have cons? </del></p>
+<h2 id="weapons">weapons<a class="headerlink" href="#weapons" title="Permanent link">&para;</a></h2>
+<h3 id="4-color-ballpoint-pen">4 color ballpoint pen<a class="headerlink" href="#4-color-ballpoint-pen" title="Permanent link">&para;</a></h3>
+<p>It's a huge ballpoint pen. It takes a lot of effort to wield the ball point pen. And it really hurts!</p>
+<ul>
+<li>Crafting: Quill x1, Glass Balls x1</li>
+<li>Speed: -10%</li>
+<li>Durability: 100</li>
+<li>Damage: 250</li>
+<li>Strike Duration: 0.66s + 0.42s</li>
+</ul>
+<details class="hints">
+<summary>Hints</summary>
+<ul>
+<li>Ballpoint pen bursts with high damage, but its sustained damage is ordinary.</li>
+<li>Unequipping weapon manually can skip post-strike animation.</li>
+</ul>
+</details>
+<h3 id="penlight">Penlight<a class="headerlink" href="#penlight" title="Permanent link">&para;</a></h3>
+<p>Can illuminate and hack monsters. The stronger the light, the higher the damage. Charge with firefly and bulb flower.</p>
+<ul>
+<li>Crafting: lantern x1, electric horn x1</li>
+<li>Lighting time: 500 seconds</li>
+<li>Damage: 15 (extinguished), 45-75 (lit)</li>
+</ul>
+<h3 id="golden-ribbon-under-development">Golden Ribbon -- under development<a class="headerlink" href="#golden-ribbon-under-development" title="Permanent link">&para;</a></h3>
+<p>Swing like a serpent, dealing damage to multiple targets over a wide area in front.</p>
+<ul>
+<li>Crafting: whip x1, spider silk x5</li>
+<li>Durability: 150</li>
+<li>Damage: 40</li>
+<li>Can be repaired with sewing bag and tape.</li>
+</ul>
+<h2 id="pet">Pet<a class="headerlink" href="#pet" title="Permanent link">&para;</a></h2>
+<h3 id="leon-under-development">Leon -- under development<a class="headerlink" href="#leon-under-development" title="Permanent link">&para;</a></h3>
+<p>A nice helper.</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.top"], "search": "../../assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c44cc438.min.js"></script>
+      
+    
+  </body>
+</html>

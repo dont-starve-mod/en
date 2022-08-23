@@ -1,0 +1,1466 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<style type="text/css">
+  .md-content figure{
+    padding-top: 30px;
+  }
+  .md-content figcaption{
+    margin-bottom: 0px!important;
+  }
+  h3 {
+    /*color: var(--md-accent-fg-color);*/
+    color: var(--md-typeset-a-color);
+  }
+  .common-box {
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: double;
+    padding: 5px 20px !important;
+    /*border-color: red;*/
+    /*background-color: rgb(255,230,230);*/
+  }
+
+  .common-box a{
+    font-weight: 600;
+  }
+
+  @media screen and (max-width:750px){ 
+    video{
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>
+<script type="text/javascript">
+  // START
+  // 批量设置动图宽度
+  function setGifWidth() {
+    var content = document.querySelector('.md-content');
+    if (content != null){
+      var imgs = content.getElementsByTagName('img');
+      for (var i = 0; i < imgs.length; ++i){
+        if (imgs[i].getAttribute('src').endsWith(".gif")){
+          if (!imgs[i].hasAttribute('width')){
+            imgs[i].setAttribute('width', '400');
+          }
+          imgs[i].setAttribute('loading', 'lazy');
+        }
+      }
+    }
+  }
+  // 批量修改小图标大小
+  function setTitleIconWidth() {
+    var imgs = document.querySelectorAll('h3>img');
+    for (var i = 0; i < imgs.length; ++i){
+      if (!imgs[i].hasAttribute('width')){
+        imgs[i].setAttribute('width', '35');
+        imgs[i].setAttribute('style', 'margin-right:8px;vertical-align:middle;');
+      }
+    }
+  }
+  // 添加视频
+  function setVideos() {
+    var videos = document.querySelectorAll('video');
+    for (var i = 0; i < videos.length; ++i){
+      var v = videos[i];
+      if (!v.hasAttribute('autoplay')){
+        v.setAttribute('autoplay', 'autoplay');
+      }
+      if (!v.hasAttribute('playsinline')){
+        v.setAttribute('playsinline', 'playsinline');
+      }
+      if (!v.hasAttribute('webkit-playsinline')){
+        v.setAttribute('webkit-playsinline', 'webkit-playsinline');
+      }
+      if (!v.hasAttribute('muted')){
+        v.setAttribute('muted', 'muted');
+      }
+      if (!v.hasAttribute('loop')){
+        v.setAttribute('loop', 'loop');
+      }
+      if (!v.hasAttribute('width')){
+        v.setAttribute('width', '400');
+      }
+      // var name = v.getAttribute('lw-name');
+      // var source = document.createElement('source');
+      // source.setAttribute('src', 'http://mod.3vcm.vip/videos/'+name);
+      // source.setAttribute('type', 'video/mp4');
+      // v.appendChild(source);
+
+      var txt =document.createTextNode("'您的浏览器不支持 video 标签，建议使用 Chrome、Safari、Edge 等现代浏览器。'");
+      v.appendChild(txt);
+    }
+  }
+  // 添加新js脚本调整颜色
+  function getPalette() {
+    var path = location.pathname;
+    var theme = {
+      "homura": {
+        "default": "deep-purple",
+      },
+      "momo": {
+        "default": "pink",
+      },
+      "ohtoai": {
+        "default": "amber",
+      },
+      "bugtracker": {
+        "default": "black",
+      },
+      "luckwater": {
+        "default": "light-blue"
+      },
+      "home": {
+        "default": "green",
+      },
+      "default": {
+        "default": "black"
+      },
+    }
+    for (var key in theme){
+      if (path.indexOf(key) != -1){
+        return theme[key];
+      }
+    }
+    return theme.default;
+  }
+  function dictGetValue(obj, key){
+    if (typeof obj == "string"){
+      return obj;
+    }
+    else if (obj[key]){
+      return obj[key];
+    }
+    else{
+      return obj["default"];
+    }
+  }
+
+  function changePalette() {
+    var color = getPalette()
+    console.log("Color:", color);
+    // html body
+    body = document.body;
+    // 深浅色切换器
+    var form = document.querySelector('header>nav>.md-header__option');
+    if (form != null){
+      var i = 0;
+      var label = form.getElementsByClassName('md-icon');
+      var option = form.getElementsByClassName('md-option');
+
+      for (i = 0; i < option.length; ++i){
+        var scheme = option[i].getAttribute('data-md-color-scheme');
+        var data = dictGetValue(color, scheme);
+        var primary = dictGetValue(data, "primary");
+        var accent  = dictGetValue(data, "accent");
+        option[i].setAttribute('data-md-color-primary', primary);
+        option[i].setAttribute('data-md-color-accent', accent);
+        if (!label[i].hasAttribute('hidden')){
+          // 顺便设置一下主题颜色
+          body.setAttribute('data-md-color-primary', primary);
+          body.setAttribute('data-md-color-accent', accent);
+        }
+      }
+    } 
+    else{
+    }
+  }
+
+  function setHighlight(){
+    console.log("setHighlight")
+    var reg = new RegExp("h=([^&]*)(&|$)", "i");
+    let r = window.location.search.substr(1).match(reg)[1];
+    if (r != null) {
+      r = decodeURIComponent(r);
+      var content = document.getElementById("md-content").innerHTML;
+      console.log(r)
+      var reg = new RegExp("(" + r + ")", "g");  
+      var str = content;  
+      var newstr = str.replace(reg, "<span style='background-color:#EBEC4F'>$1</span>");
+      document.getElementById("md-content").innerHTML = newstr;
+    }
+  }
+
+  function modPageInit() {
+    changePalette();
+    setGifWidth();
+    setTitleIconWidth();
+    setVideos();
+    setHighlight();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', modPageInit);
+  } else {
+    modPageInit();
+  }
+// END
+</script>
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="老王">
+      
+      
+        <link rel="canonical" href="https://dont-starve-mod.github.io/en/momo_index/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.1.8">
+    
+    
+      
+        <title>Introduction - Don't Starve Mods by LAOWANG</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.644de097.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7C&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:""}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#basic-properties" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="/en/home" title="Don&#39;t Starve Mods by LAOWANG" class="md-header__button md-logo" aria-label="Don't Starve Mods by LAOWANG" data-md-component="logo">
+      
+  <img src="https://pic.imgdb.cn/item/6194b9462ab3f51d9154d00b.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Don't Starve Mods by LAOWANG
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../home/" class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
+        Momo Chiyoda
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../noellipsis_index/" class="md-tabs__link">
+        No Ellipse
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ohtoai_character/" class="md-tabs__link">
+        Ai Ohto
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../luckwater_index/" class="md-tabs__link">
+        Luck Water
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="/en/home" title="Don&#39;t Starve Mods by LAOWANG" class="md-nav__button md-logo" aria-label="Don't Starve Mods by LAOWANG" data-md-component="logo">
+      
+  <img src="https://pic.imgdb.cn/item/6194b9462ab3f51d9154d00b.png" alt="logo">
+
+    </a>
+    Don't Starve Mods by LAOWANG
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../home/" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Momo Chiyoda
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Momo Chiyoda" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Momo Chiyoda
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Introduction
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-properties" class="md-nav__link">
+    Basic Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-retired-magical-girl" class="md-nav__link">
+    A Retired Magical Girl
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-terrible-cook" class="md-nav__link">
+    A Terrible Cook
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-dual-class-holder" class="md-nav__link">
+    A Dual-class Holder
+  </a>
+  
+    <nav class="md-nav" aria-label="A Dual-class Holder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1light-dark-conversion" class="md-nav__link">
+    （1）Light-dark Conversion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2the-ability-of-magic-girl" class="md-nav__link">
+    （2）The Ability of Magic Girl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3the-ability-of-demonkind" class="md-nav__link">
+    （3）The ability of Demonkind
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#item" class="md-nav__link">
+    Special Items
+  </a>
+  
+    <nav class="md-nav" aria-label="Special Items">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mascot-hat" class="md-nav__link">
+    Mascot Hat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cat" class="md-nav__link">
+     Cat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heartful-peach-morphing-stick" class="md-nav__link">
+    Heartful Peach Morphing Stick
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#silver-magic-wand" class="md-nav__link">
+    Silver Magic Wand
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-night" class="md-nav__link">
+    “The Night”
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#popsiclepeachy" class="md-nav__link">
+    Popsicle(peachy)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sports-drink" class="md-nav__link">
+    Sports drink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protein-drink" class="md-nav__link">
+    Protein Drink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-darkness-elixir" class="md-nav__link">
+    The Darkness Elixir
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#note" class="md-nav__link">
+    NOTE:
+  </a>
+  
+    <nav class="md-nav" aria-label="NOTE:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#about-other-characters" class="md-nav__link">
+    About Other Characters:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#about-the-magic-wand" class="md-nav__link">
+    About the Magic Wand:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#about-momos-weapon-after-falling-to-the-darkness" class="md-nav__link">
+    About Momo’s Weapon after Falling to the Darkness:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../momo_secret/" class="md-nav__link">
+        Secret Documant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../momo_test/" class="md-nav__link">
+        Debug Commands
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          No Ellipse
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="No Ellipse" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          No Ellipse
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../noellipsis_index/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Ai Ohto
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ai Ohto" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Ai Ohto
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ohtoai_character/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Luck Water
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Luck Water" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Luck Water
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../luckwater_index/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-properties" class="md-nav__link">
+    Basic Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-retired-magical-girl" class="md-nav__link">
+    A Retired Magical Girl
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-terrible-cook" class="md-nav__link">
+    A Terrible Cook
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-dual-class-holder" class="md-nav__link">
+    A Dual-class Holder
+  </a>
+  
+    <nav class="md-nav" aria-label="A Dual-class Holder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1light-dark-conversion" class="md-nav__link">
+    （1）Light-dark Conversion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2the-ability-of-magic-girl" class="md-nav__link">
+    （2）The Ability of Magic Girl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3the-ability-of-demonkind" class="md-nav__link">
+    （3）The ability of Demonkind
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#item" class="md-nav__link">
+    Special Items
+  </a>
+  
+    <nav class="md-nav" aria-label="Special Items">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mascot-hat" class="md-nav__link">
+    Mascot Hat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cat" class="md-nav__link">
+     Cat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heartful-peach-morphing-stick" class="md-nav__link">
+    Heartful Peach Morphing Stick
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#silver-magic-wand" class="md-nav__link">
+    Silver Magic Wand
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-night" class="md-nav__link">
+    “The Night”
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#popsiclepeachy" class="md-nav__link">
+    Popsicle(peachy)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sports-drink" class="md-nav__link">
+    Sports drink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protein-drink" class="md-nav__link">
+    Protein Drink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-darkness-elixir" class="md-nav__link">
+    The Darkness Elixir
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#note" class="md-nav__link">
+    NOTE:
+  </a>
+  
+    <nav class="md-nav" aria-label="NOTE:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#about-other-characters" class="md-nav__link">
+    About Other Characters:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#about-the-magic-wand" class="md-nav__link">
+    About the Magic Wand:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#about-momos-weapon-after-falling-to-the-darkness" class="md-nav__link">
+    About Momo’s Weapon after Falling to the Darkness:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content" id="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>Introduction</h1>
+
+<style>
+    .momo-quote {font-style: italic;}
+    .momo-feature-box {border: solid 1px #ccc;}
+    .momo-strong {color: #f33; font-weight: bold; font-size: 1.2em;}
+
+    blockquote {font-style: italic; color: #ccc; border-left-width: 0px!important;}
+    blockquote {padding-left: 0px!important;}
+
+    .md-typeset :is(.note)>:is(.admonition-title,summary) {border-left-color: #ff44a7; background-color:rgba(255, 77, 215, 0.1)}
+    .md-typeset :is(.admonition,details):is(.note) {border-left-color: #ff44a7;}
+    .md-typeset :is(.note)>:is(.admonition-title,summary):before {background-color: #ff44a7;}
+
+    article.md-typeset > h4 {margin-top: 2em;}
+    .first-h4 {margin-top: 1em!important;}
+    .e-egg {color: rgba(255,255,255,0.01)!important; font-size: 0.5em; margin: 0 0;}
+
+    [data-md-color-primary=pink] {
+        --md-primary-fg-color: #e666c8;
+        --md-primary-fg-color--light: #bb69c9;
+        --md-primary-fg-color--dark: #8c24a8;
+        --md-primary-bg-color: #fff;
+        --md-primary-bg-color--light: hsla(0,0%,100%,.7);
+    }
+
+    h4>.invicon, .status {
+        zoom: 50%;
+        margin-right: .5em;
+        vertical-align:middle       
+    }
+    .status {
+        zoom: 64%!important;
+    }
+
+</style>
+
+<p><strong>Momo Chiyoda</strong> is the main character in the manga <strong><em>"The Demon Girl Next Door"</em></strong>.</p>
+<figure>
+    <img src=https://pic.imgdb.cn/item/62cefbdcf54cd3f937ae7d87.png width=256px />
+    <figcaption>“Making your vow by breaking the popsicle!”</figcaption>
+</figure>
+
+<h3 id="basic-properties">Basic Properties<a class="headerlink" href="#basic-properties" title="Permanent link">&para;</a></h3>
+<ul>
+<li><img src=/en/imgs/dst/hunger.png class=status />Hunger: 150</li>
+<li><img src=/en/imgs/dst/sanity.png class=status />Sanity: 200</li>
+<li><img src=/en/imgs/dst/health.png class=status />Health: 200</li>
+<li><img src=/en/imgs/dst/momo_magic.png class=status style="zoom:16%!important" />Magic: 300</li>
+</ul>
+<h3 id="a-retired-magical-girl">A Retired Magical Girl<a class="headerlink" href="#a-retired-magical-girl" title="Permanent link">&para;</a></h3>
+<p>Magical girls are descendants of the light clan, and they fight with the power of magic. Notice! Because of their etheric body, magical girls would become much weaker if they use magic power excessively.</p>
+<p>Momo has become a magical girl at a very young age and seemed to save the world in the past?</p>
+<p>Despite being able to use magic, Momo is more into physical energy. As a fitness fanatic, she can break the grip strength meter with her single hand.</p>
+<blockquote>
+<p>“The physical can overcome the magical.”</p>
+</blockquote>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Having a value of 300 points of the Magic, the Health is affected by the Magic. The lower the Magic, the lower the Health(the minimum value is 1).</li>
+<li>Normally, the Magic can be recovered slowly. When the Sanity is higher than 85%, the Magic recovery speed is doubled.</li>
+<li>Damage multiplier is 1.25x.</li>
+</ul>
+<details class="note">
+<summary>the relationship between the Magic and the Health</summary>
+<p>The formula for the Health（H）and the Magic（M）：</p>
+<p><code>H = 2M - M<sup>2</sup></code></p>
+<p><img src=https://pic.imgdb.cn/item/62cec33ef54cd3f93751118f.png width=300px/></p>
+<table>
+<thead>
+<tr>
+<th>Magic</th>
+<th>100%</th>
+<th>90%</th>
+<th>80%</th>
+<th>70%</th>
+<th>60%</th>
+<th>50%</th>
+<th>40%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Health</td>
+<td>100%</td>
+<td>99%</td>
+<td>96%</td>
+<td>91%</td>
+<td>84%</td>
+<td>75%</td>
+<td>64%</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Magic</th>
+<th>30%</th>
+<th>20%</th>
+<th>10%</th>
+<th>5%</th>
+<th>2%</th>
+<th>0%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Health</td>
+<td>51%</td>
+<td>36%</td>
+<td>19%</td>
+<td>10%</td>
+<td>4%</td>
+<td>0%（&gt;=1）</td>
+</tr>
+</tbody>
+</table>
+<p>When the Magic reserve is sufficient, the loss of some Magic will not have much impact on the maximum of the Health.</p>
+<p>However, when the Magic is scarce, a small amount of Magic loss can lead to huge fluctuations in the Health.</p>
+</details>
+<h3 id="a-terrible-cook">A Terrible Cook<a class="headerlink" href="#a-terrible-cook" title="Permanent link">&para;</a></h3>
+<p>Momo isn’t good at cooking. A beef hamburger steak she made with great care was a total failure -- "only tasted salt, onion, and charred meat." </p>
+<p>In order to make food look more delicious, Momo sometimes infuses them with magic, but the end product is...not satisfied.</p>
+<blockquote>
+<p>“Calm down, Momo, the food is glowing now!”</p>
+</blockquote>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>The failure rate of using a crock pot is 75%.</li>
+<li>[Peachy Failed Cuisine] is gotten when cooking fails.</li>
+<li>It seems that some magic remains in the [Peachy Failed Cuisine], so it's best not to eat it!</li>
+</ul>
+<p><img src=https://pic.imgdb.cn/item/62cec3d8f54cd3f9375214e7.png width=300px /></p>
+<details class="note">
+<summary>Peachy Failed Cuisine specific settings</summary>
+<details class="warning">
+<summary>Checking the detailed settings will make you <span class=momo-strong>lose the fun of exploring the unknown!</span><br> Are you sure you wanna do this?</summary>
+<details class="warning">
+<summary>Really, really wanna see it??</summary>
+<p><p>Miss Fresh Peach may fail in cooking 'any food', including the Failed Cuisine! (Try putting four twigs in the pot).</p>
+<p>There are four forms of ‘Peachy Failed Cuisine’, which are related to ingredients.</p>
+<p>Eating these failed dishes can cause brief hallucinations, but players can return to normal quickly.</p>
+<h3>Cuisine Similarity</h3>
+<p>Stackable, burnable, edible, and has a 6-day shelf life.</p>
+<h3><img src=/en/imgs/momo/momo_wetgoop_eggplant.png class=invicon />Sprouted Eggs</h3>
+<p>There is a chance to make it if they are contained in ingredients.</p>
+<p>After eating them, 60 Sanity will be deducted, and 20 HP will be recovered.</p>
+<p>Plantable, they would turn into random plants.</p>
+<h3><img src=/en/imgs/momo/momo_wetgoop_riceroll.png class=invicon />Rice Roll</h3>
+<p>It's easy to make it.</p>
+<p>After eating it, 30 Sanity will be deducted, 37.5 Hunger will be recovered, memory will be temporarily affected, and you will not be able to clear away the black fog on the map and unlock new recipes within 1 minute.</p>
+<h3><img src=/en/imgs/momo/momo_wetgoop_drink.png class=invicon />Pink Bubble Drink</h3> 
+<p>It's easy to make it.</p>
+<p>After drinking it, 1 Sanity, 1 Health, and 1 Hunger will be restored, and the character will immediately go to sleep.</p>
+<h3><img src=/en/imgs/momo/momo_wetgoop_meat.png class=invicon />Meat with Magic</h3>
+<p>If the meat or fish is more than 2, there is a posibility of making it.</p>
+<p>After eating it, 75 Hunger and 30 Magic would be restored.</p></p>
+</details>
+</details>
+</details>
+<h3 id="a-dual-class-holder">A Dual-class Holder<a class="headerlink" href="#a-dual-class-holder" title="Permanent link">&para;</a></h3>
+<p>Momo had temporarily turned over to the dark side so that she could enter Shamiko's nightmares and bring her back to the real world. At the same time, she was falling into the darkness and gaining the power of the dark. </p>
+<p>Although Mikan hit Momo with a magic shock that should pull her back into the light side, Momo's core isn't solidified yet, leading her to descend into the darkness easily when she is depressed.</p>
+<p>Miss Fresh Peach is not proficient at controlling the magic in the mode of darkness.</p>
+<blockquote>
+<p>“What can be guaranteed is that even if Momo goes into the darkness, it will just transform the energy source without affecting her personality.”</p>
+</blockquote>
+<p><strong>Characteristics:</strong></p>
+<h4 id="1light-dark-conversion">（1）Light-dark Conversion<a class="headerlink" href="#1light-dark-conversion" title="Permanent link">&para;</a></h4>
+<ul>
+<li>The dark side is forced to trigger when the Sanity is 0.</li>
+<li><strong>The Magic cannot be recovered</strong> in the darkness, and it vanishes at a certain frequency.</li>
+<li>If the Sanity is higher than 15%, the darkness will be automatically released after for a while, the higher the Sanity, the shorter the recovery process.</li>
+<li>Reanimation also clears the Darkness.</li>
+</ul>
+<p><img src=https://pic.imgdb.cn/item/62cec4b4f54cd3f9375371e8.gif width=300px /></p>
+<h4 id="2the-ability-of-magic-girl">（2）The Ability of Magic Girl<a class="headerlink" href="#2the-ability-of-magic-girl" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Making[Silver Magic Wand] and [Heartful Peach Morphing Stick].</li>
+<li>[Silver Magic Wand] causes high damage and consumes more magic.</li>
+<li>[Heartful Peach Morphing Stick]can be used to change magic outfits freely.</li>
+</ul>
+<h4 id="3the-ability-of-demonkind">（3）The ability of Demonkind<a class="headerlink" href="#3the-ability-of-demonkind" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[The Night]can be made.</li>
+<li>[Silver Magic Wand] consumes a little magic, causing slight damage.</li>
+<li>Shadow weapons gain a 50% higher bonus.</li>
+</ul>
+<h3 id="item">Special Items<a class="headerlink" href="#item" title="Permanent link">&para;</a></h3>
+<p>Some small items that Miss Fresh Peach brought into the Constant, and are expected to be helpful to survival in the wild.</p>
+<h4 class="first-h4" id="mascot-hat"><img src=/en/imgs/momo/momo_mascothat.png class=invicon />Mascot Hat<a class="headerlink" href="#mascot-hat" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">c_give</span><span class="p">(</span><span class="s2">&quot;momo_mascothat&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>A hat designed based on the mascot 'Miss Sakura'.</p>
+<p>Momo likes the mascot because the color scheme is identical to her sister's magic costume.</p>
+<ul>
+<li>Ingredients: cat tail, light bulbs*6.</li>
+<li>Lighting up in a small area(filled with light bulbs), slowly recovering the Sanity.</li>
+</ul>
+<p class="e-egg">“By the way, it's great that you two are so close.”</p>
+
+<h4 id="cat"><img src=/en/imgs/momo/momo_cat_builder.png class=invicon /> Cat<a class="headerlink" href="#cat" title="Permanent link">&para;</a></h4>
+<p><div class="highlight"><pre><span></span><code><span class="n">c_spawn</span><span class="p">(</span><span class="s2">&quot;momo_cat&quot;</span><span class="p">)</span>
+</code></pre></div>
+“The time has come！”</p>
+<ul>
+<li>Ingredients: meat with magic*1, fish slice*1.</li>
+</ul>
+<h4 id="heartful-peach-morphing-stick"><img src=/en/imgs/momo/momo_stick_morphing_light.png class=invicon />Heartful Peach Morphing Stick<a class="headerlink" href="#heartful-peach-morphing-stick" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">c_give</span><span class="p">(</span><span class="s2">&quot;momo_stick_morphing&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>A magical wand that can be quickly changed costumes anytime, anywhere.</p>
+<p><em>A skilled magical girl can put on the magical outfit in just 0.01 seconds.</em></p>
+<p><img src=https://pic.imgdb.cn/item/62cefe27f54cd3f937b13714.gif width=200px /></p>
+<ul>
+<li>Ingredients: living log/<em>1, redemptive heart/</em>1.</li>
+<li><em>Note: [Heartful Peach Morphing Stick] can not be made in the darkness.</em></li>
+</ul>
+<h4 id="silver-magic-wand"><img src=/en/imgs/momo/momo_stick_attack.png class=invicon />Silver Magic Wand<a class="headerlink" href="#silver-magic-wand" title="Permanent link">&para;</a></h4>
+<p><div class="highlight"><pre><span></span><code><span class="n">c_give</span><span class="p">(</span><span class="s2">&quot;momo_stick_attack&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+A long magical wand that can be used for ranged attacks.</p>
+<ul>
+<li>Ingredients: living log*2, moon fragment*2, red gem*2. A Prestihatitator is needed.</li>
+<li>200 durability.</li>
+<li>Causing 33 damage in normal state and 15 damage in the darkness.</li>
+<li>
+<p>You can press and hold it to charge, dealing higher damage (and also consuming more magic).</p>
+</li>
+<li>
+<p><em>Note: [Silver Magic Wand] can not be made in the darkness.</em></p>
+</li>
+</ul>
+<details class="note">
+<summary>Charging Mechanism</summary>
+<p>When Momo is in normal form, the silver magic wand can be charged up to a maximum of 5 layers. Each layer of charging takes 0.5 seconds, causing an additional 50 Damage and consuming an additional 4 Magic. If the Magic is lacking, the charging will not work out.</p>
+<p>The charging state will be interrupted by being hit, unloading equipment, freezing, etc. Please pay attention to safety.</p>
+<p>Charging does not work when in the darkness.</p>
+</details>
+<h4 id="the-night"><img src=/en/imgs/momo/momo_sword.png class=invicon />“The Night”<a class="headerlink" href="#the-night" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">c_give</span><span class="p">(</span><span class="s2">&quot;momo_sword&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>A powerful weapon used by the Dark Nightmare in the dream world.</p>
+<ul>
+<li>Ingredients: dark sword, nightmare amulet, crow feathers*6.</li>
+<li>75 durability.</li>
+<li>75 damage.</li>
+<li>
+<p>If you kill an enemy while attacking, the attack <strong>does not consume</strong> durability.</p>
+</li>
+<li>
+<p><em>Note: [The Night] can only be made in the darkness.</em></p>
+</li>
+</ul>
+<h4 id="popsiclepeachy"><img src=/en/imgs/momo/momo_peachice.png class=invicon />Popsicle(peachy)<a class="headerlink" href="#popsiclepeachy" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">c_give</span><span class="p">(</span><span class="s2">&quot;momo_peachice&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<p>It's suitable to share with your good friends.</p>
+<ul>
+<li>Ingredients: ice cube*1, berries*4, honey*1.</li>
+<li>Restore 20 Sanity and 15 Magic.</li>
+</ul>
+<h4 id="sports-drink"><img src=/en/imgs/momo/momo_sportsdrink.png class=invicon />Sports drink<a class="headerlink" href="#sports-drink" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">c_give</span><span class="p">(</span><span class="s2">&quot;momo_sportsdrink&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<p>Diluted 3-fold to reduce osmolarity.</p>
+<ul>
+<li>Ingredients: Smoothing tea*1, salt crystal*1.</li>
+<li>Restore 37.5 Hunger and 30 Magic, it can be drunk three times.</li>
+</ul>
+<h4 id="protein-drink"><img src=/en/imgs/momo/momo_protein.png class=invicon />Protein Drink<a class="headerlink" href="#protein-drink" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">c_give</span><span class="p">(</span><span class="s2">&quot;momo_protein&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<p>Recommended by Miss Fresh Peach</p>
+<ul>
+<li>Ingredients: Bunny stew*1, roasted tallbird egg*1, koalefant trunk steak*1, carrot*2.</li>
+<li>112.5 Hunger will be restored promptly; Consumed Hunger is transforming into the Health and the Magic within 6 minutes.</li>
+</ul>
+<h4 id="the-darkness-elixir"><img src=/en/imgs/momo/momo_darknesspill.png class=invicon />The Darkness Elixir<a class="headerlink" href="#the-darkness-elixir" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">c_give</span><span class="p">(</span><span class="s2">&quot;momo_darknesspill&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>Use only in emergencies.</p>
+<ul>
+<li>Ingredients: iridescent gem*1，nightmare fuel*8, empty*1. A Shadow manipulator is needed.</li>
+<li>After taking it, 60 Sanity will be deducted, the Magic value will become 100%, and you will be forced to enter the darkness for 10 minutes, and the Magic loss rate will be reduced by 75%.</li>
+<li>The potion is cleared when the character dies.</li>
+</ul>
+<hr />
+<h3 id="note">NOTE:<a class="headerlink" href="#note" title="Permanent link">&para;</a></h3>
+<h4 id="about-other-characters">About Other Characters:<a class="headerlink" href="#about-other-characters" title="Permanent link">&para;</a></h4>
+<p>Lao Wang spent 2,000 RMB on the illustrations of Momo’s four sets of models. By the way, Lao Wang is also cursed with '<strong>spending up to 2,000 RMB per month</strong>', so he hasn’t enough money to cover the cost of other roles!</p>
+<p>If you like Shamiko, Mikan, or Sakura, and want them to come to the world of <em>Don’t Starve Together</em>, please feel free to play without any worries.</p>
+<h4 id="about-the-magic-wand">About the Magic Wand:<a class="headerlink" href="#about-the-magic-wand" title="Permanent link">&para;</a></h4>
+<p>Momo used a relatively long silver wand when training Shamiko, and a shorter one when transforming(It was called "Heartful Peach Morphing Stick" in the manga).</p>
+<p>These two should be different forms of the same wand (<strong>attacking mode</strong> vs <strong>dressing mode</strong>). To better distinguish, they are designed into two shapes in my game.</p>
+<h4 id="about-momos-weapon-after-falling-to-the-darkness">About Momo’s Weapon after Falling to the Darkness:<a class="headerlink" href="#about-momos-weapon-after-falling-to-the-darkness" title="Permanent link">&para;</a></h4>
+<p>Momo’s weapon is a black knife, the name of which was not mentioned in the manga, so Lao Wang gave it a name -- The Night.</p>
+<hr />
+<p>Original: The Demon Girl Next Door (Izumo Itō, 伊藤いづも)</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../home/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../momo_secret/" class="md-footer__link md-footer__link--next" aria-label="Next: Secret Documant" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Secret Documant
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.top"], "search": "../assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c44cc438.min.js"></script>
+      
+    
+  </body>
+</html>
